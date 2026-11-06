@@ -1,6 +1,6 @@
 {
   "name": "@artsnet/wikidata-musicians",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Search Wikidata for musicians and musical groups and get back only verified hits: QID, labels and descriptions in your languages, plus Commons portraits with license and author credit. No API key. Library, CLI and MCP server.",
   "license": "MIT",
   "author": "Artsnet",

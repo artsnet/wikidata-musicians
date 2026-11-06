@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -134,9 +135,13 @@ export function clientOptionsFromEnv(env: Record<string, string | undefined>): C
   return options;
 }
 
+/**
+ * True when this file is the script Node was started with. Package bins are symlinks in
+ * node_modules/.bin, so argv[1] is the link while import.meta.url is the real path: compare real paths.
+ */
 const isEntryPoint = (() => {
   try {
-    return process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href;
+    return process.argv[1] !== undefined && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href;
   } catch {
     return false;
   }

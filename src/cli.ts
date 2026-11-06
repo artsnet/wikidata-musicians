@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { createWikidataMusiciansClient, type ClientOptions, type WikidataMusiciansClient } from "./client.js";
 import { LANGUAGES_ENV, USER_AGENT_ENV } from "./env.js";
@@ -216,9 +217,13 @@ function emit(io: CliIo, json: boolean, output: Output): number {
   return output.ok ? EXIT_CODES.ok : EXIT_CODES[output.error.code];
 }
 
+/**
+ * True when this file is the script Node was started with. Package bins are symlinks in
+ * node_modules/.bin, so argv[1] is the link while import.meta.url is the real path: compare real paths.
+ */
 const isEntryPoint = (() => {
   try {
-    return process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href;
+    return process.argv[1] !== undefined && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href;
   } catch {
     return false;
   }

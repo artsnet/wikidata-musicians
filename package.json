@@ -1,0 +1,50 @@
+{
+  "name": "@artsnet/wikidata-musicians",
+  "version": "0.1.0",
+  "description": "Search Wikidata for musicians and musical groups and get back only verified hits: QID, labels and descriptions in your languages, plus Commons portraits with license and author credit. No API key. Library, CLI and MCP server.",
+  "license": "MIT",
+  "author": "Artsnet",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artsnet/wikidata-musicians.git"
+  },
+  "homepage": "https://github.com/artsnet/wikidata-musicians#readme",
+  "bugs": "https://github.com/artsnet/wikidata-musicians/issues",
+  "keywords": ["wikidata", "wikimedia-commons", "musicians", "music-metadata", "mcp", "mcp-server", "cli", "cloudflare-workers", "no-api-key"],
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "wikidata-musicians": "./dist/cli.js",
+    "wikidata-musicians-mcp": "./dist/mcp.js"
+  },
+  "files": ["dist", "SKILL.md", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run clean && npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0"
+  }
+}
